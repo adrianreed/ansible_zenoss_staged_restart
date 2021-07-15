@@ -1,85 +1,88 @@
 ---
 - hosts: zenoss_pool
   tasks:
-  block:
-    - name: Check for stray docker containers
-      shell: 
-        cmd: docker ps -a --format {{.ID}} 
-      register: docker_status
-      until: docker_status.stdout_lines | list | count == 0
-      retries: 1
-      delay: 30
-      failed_when: docker_status.stdout_lines | list | count != 0
-  rescue:
+  - name: Tasks to clean the environment
     block:
-      - name: Remove stray containers
-        shell:
-          cmd: docker ps -qa | xargs --no-run-if-empty docker rm -fv
       - name: Check for stray docker containers
-        shell:
-          cmd: docker ps -a --format {{.ID}}
-        register: docker_status
-        until: docker_status.stdout_lines | list | count == 0
-        retries: 1
-        delay: 30
-        failed_when: docker_status.stdout_lines | list | count != 0 
-    rescue:
-      - name: Stop NFS
-        service:
-          name: nfs
-          state: stopped
-      - name: Stop Docker
-        service:
-          name: docker
-          state: stopped
-      - name: Start NFS 
-        service:
-          name: nfs
-          state: started
-      - name: Start Docker
-        service:
-          name: docker
-          state: started
-      - name: Remove stray containers
-        shell:
-          cmd: docker ps -qa | xargs --no-run-if-empty docker rm -fv
-      - name: Check for stray docker containers
-        shell:
-          cmd: docker ps -a --format {{.ID}}
+        shell: 
+          cmd: docker ps -a --format {{.ID}} 
         register: docker_status
         until: docker_status.stdout_lines | list | count == 0
         retries: 1
         delay: 30
         failed_when: docker_status.stdout_lines | list | count != 0
+    rescue:
+      - name: 
+        block:
+          - name: Remove stray containers
+            shell:
+              cmd: docker ps -qa | xargs --no-run-if-empty docker rm -fv
+          - name: Check for stray docker containers
+            shell:
+              cmd: docker ps -a --format {{.ID}}
+            register: docker_status
+            until: docker_status.stdout_lines | list | count == 0
+            retries: 1
+            delay: 30
+            failed_when: docker_status.stdout_lines | list | count != 0 
+        rescue:
+          - name: Stop NFS
+            service:
+              name: nfs
+              state: stopped
+          - name: Stop Docker
+            service:
+              name: docker
+              state: stopped
+          - name: Start NFS 
+            service:
+              name: nfs
+              state: started
+          - name: Start Docker
+            service:
+              name: docker
+              state: started
+          - name: Remove stray containers
+            shell:
+              cmd: docker ps -qa | xargs --no-run-if-empty docker rm -fv
+          - name: Check for stray docker containers
+            shell:
+              cmd: docker ps -a --format {{.ID}}
+            register: docker_status
+            until: docker_status.stdout_lines | list | count == 0
+            retries: 1
+            delay: 30
+            failed_when: docker_status.stdout_lines | list | count != 0
 
-  block:
-    - name: Check for active serviced mounts
-      command:
-        cmd: grep serviced /proc/mounts
-      register: grep_status
-      failed_when: grep_status.stdout_lines | list | count != 0
-  rescue:
     block:
-      - name: Find active volumes
-        set_fact:
-          active_volumes: "{{ mounts_status.stdout | regex_findall(volumes) }}"
-        vars:
-          volumes: '\/opt\/serviced\/var\/volumes\/([a-zA-Z0-9]+)'
-      - name: Unmount active volumes
-        command: 
-          cmd: umount -f "{{ item }}"
-        with_items: active_volumes
       - name: Check for active serviced mounts
         command:
           cmd: grep serviced /proc/mounts
         register: grep_status
         failed_when: grep_status.stdout_lines | list | count != 0
     rescue:
-      - name: Do a lazy unmount of the volumes
-        command: 
-          cmd: umount -f -l "{{ item }}"
-        with_items: active_volumes
-      - name: Restart NFS
-        service:
-          name: nfs
-          state: restarted
+      - name: Fix active mounts
+        block:
+          - name: Find active volumes
+            set_fact:
+              active_volumes: "{{ mounts_status.stdout | regex_findall(volumes) }}"
+            vars:
+              volumes: '\/opt\/serviced\/var\/volumes\/([a-zA-Z0-9]+)'
+          - name: Unmount active volumes
+            command: 
+              cmd: umount -f "{{ item }}"
+            with_items: active_volumes
+          - name: Check for active serviced mounts
+            command:
+              cmd: grep serviced /proc/mounts
+            register: grep_status
+            failed_when: grep_status.stdout_lines | list | count != 0
+        rescue:
+          - name: Do a lazy unmount of the volumes
+            command: 
+              cmd: umount -f -l "{{ item }}"
+            with_items: active_volumes
+          - name: Restart NFS
+            service:
+              name: nfs
+              state: restarted
