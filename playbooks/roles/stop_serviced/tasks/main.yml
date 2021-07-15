@@ -1,0 +1,3 @@
+---
+- name: Tasks to stop serviced
+  import_tasks: stop_serviced.yml

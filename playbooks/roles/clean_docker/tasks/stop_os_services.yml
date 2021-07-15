@@ -1,0 +1,8 @@
+---
+- name: Stop NFS
+  service:
+    name: "{{ item }}"
+    state: stopped
+  with_items:
+    - nfs
+    - docker

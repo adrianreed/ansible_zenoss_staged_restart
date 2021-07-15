@@ -1,0 +1,12 @@
+---
+- name: Tasks to clean docker
+  block:
+    - name: Check and remove stray containers
+      include_tasks: remove_stray_containers.yml
+  rescue:
+    - name: Stop OS services
+      include_tasks: stop_os_services.yml
+    - name: Start OS services
+      include_tasks: start_os_services.yml
+    - name: Check and remove stray containers 
+      include_tasks: remove_stray_containers.yml

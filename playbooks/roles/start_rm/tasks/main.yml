@@ -1,0 +1,3 @@
+---
+- name: Tasks to start Zenoss RM services
+  import_tasks: start_rm.yml

@@ -1,0 +1,19 @@
+---
+- name: Stop environment
+  hosts: zenoss_master
+  remote_user: "{{ ssh_user }}"
+  become: yes
+  become_user: "{{ zenoss_user }}"
+  roles:
+    - shutdown_rm
+    - stop_serviced
+  tags: stop
+
+- name: Stop environment
+  hosts: zenoss_pool
+  remote_user: "{{ ssh_user }}"
+  become: yes
+  become_user: "{{ zenoss_user }}"
+  roles:
+    - stop_serviced
+  tags: stop

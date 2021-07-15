@@ -1,21 +1,4 @@
 ---
-- name: stop env
-  remote_user: "{{ ssh_user }}"
-  become: yes
-  become_method: sudo
-  become_user: "{{ root }}"
-  import_playbook: env_stop.yml
-  when:
-    - "'env_stop' in ansible_run_tags"
-    - "'env_stop' not in ansible_skip_tags"
-  tags: env_stop
-#- import_playbook: env_clean.yml
-#  when:
-#    - "env_clean in ansible_run_tags"
-#    - "env_clean not in ansible_skip_tags"
-#  tags: env_clean
-#- import_playbook: env_start.yml
-#  when:
-#    - "env_start in ansible_run_tags"
-#    - "env_start not in ansible_skip_tags"
-#  tags: env_start
+- import_playbook: playbooks/stop.yml
+- import_playbook: playbooks/clean.yml
+- import_playbook: playbooks/start.yml

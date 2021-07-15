@@ -1,0 +1,3 @@
+---
+- name: Tasks to start serviced
+  import_tasks: start_serviced.yml

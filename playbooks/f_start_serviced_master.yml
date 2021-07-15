@@ -1,8 +1,0 @@
----
-- hosts: zenoss_master
-  tasks:
-  - name: Start serviced in the master node
-    service:
-      name: serviced
-      state: stopped
-

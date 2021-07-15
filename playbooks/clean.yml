@@ -1,0 +1,10 @@
+---
+- name: Clean docker and active mounts
+  hosts: zenoss_pool
+  remote_user: "{{ ssh_user }}"
+  become: yes
+  become_user: "{{ zenoss_user }}"
+  roles:
+    - clean_docker
+    - clean_mounts
+  tags: clean

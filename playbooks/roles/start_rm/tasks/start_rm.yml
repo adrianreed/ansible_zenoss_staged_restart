@@ -1,0 +1,4 @@
+---
+- name: Start all serviced Zenoss RM services
+  command:
+    cmd: serviced service start Zenoss.resmgr

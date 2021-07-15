@@ -1,0 +1,14 @@
+---
+- name: Remove stray containers
+  shell:
+    cmd: docker ps -qa | xargs --no-run-if-empty docker rm -fv
+
+- name: Check for stray docker containers
+  shell:
+    cmd: docker ps -a --format {{.ID}}
+  register: docker_status
+  until: docker_status.stdout_lines | list | count == 0
+  retries: 1
+  delay: 30
+  failed_when: docker_status.stdout_lines | list | count != 0
+~                                                              

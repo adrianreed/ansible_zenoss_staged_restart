@@ -1,0 +1,5 @@
+---
+- name: Start serviced
+  service:
+    name: serviced
+    state: started

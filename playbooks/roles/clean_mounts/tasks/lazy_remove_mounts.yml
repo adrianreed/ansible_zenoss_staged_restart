@@ -1,0 +1,10 @@
+---
+- name: Do a lazy unmount of the volumes
+  command:
+    cmd: umount -f -l "{{ item }}"
+  with_items: active_volumes
+
+- name: Restart NFS
+  service:
+    name: nfs
+    state: restarted

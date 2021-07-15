@@ -1,0 +1,27 @@
+---
+- name: Start serviced
+  hosts: zenoss_pool
+  remote_user: "{{ ssh_user }}"
+  become: yes
+  become_user: "{{ zenoss_user }}"
+  roles:
+    - start_serviced
+  tags: start
+
+- name: Start serviced
+  hosts: zenoss_master
+  remote_user: "{{ ssh_user }}"
+  become: yes
+  become_user: "{{ zenoss_user }}"
+  roles:
+    - start_serviced
+  tags: start
+
+- name: Start Zenoss RM service
+  hosts: zenoss_master
+  remote_user: "{{ ssh_user }}"
+  become: yes
+  become_user: "{{ zenoss_user }}"
+  roles:
+    - start_rm
+  tags: start

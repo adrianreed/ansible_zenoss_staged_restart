@@ -1,0 +1,3 @@
+---
+- name: Tasks to stop Zenoss RM services
+  import_tasks: stop_rm.yml

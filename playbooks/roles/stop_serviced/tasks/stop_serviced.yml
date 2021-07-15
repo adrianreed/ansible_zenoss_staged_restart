@@ -1,0 +1,5 @@
+---
+- name: Stop serviced
+  service:
+    name: serviced
+    state: stopped

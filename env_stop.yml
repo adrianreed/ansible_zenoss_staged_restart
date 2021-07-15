@@ -1,4 +1,0 @@
----
-- import_playbook: playbooks/a_stop_rm_services.yml
-- import_playbook: playbooks/b_stop_serviced_master.yml
-- import_playbook: playbooks/c_stop_serviced_workers.yml
