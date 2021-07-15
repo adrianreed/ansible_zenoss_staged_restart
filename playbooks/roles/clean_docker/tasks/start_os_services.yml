@@ -1,5 +1,5 @@
 ---
-- name: Start NFS
+- name: Start OS services
   service:
     name: "{{ item }}"
     state: started

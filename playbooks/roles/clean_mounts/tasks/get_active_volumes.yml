@@ -1,0 +1,11 @@
+---
+- name: Get active serviced mounts
+  command:
+    cmd: grep serviced /proc/mounts
+  register: serviced_mounts
+
+- name: Find active volumes
+  set_fact:
+    active_volumes: "{{ serviced_mounts.stdout | regex_findall(volumes) }}"
+  vars:
+    volumes: '(\/opt\/serviced\/var\/volumes\/[a-zA-Z0-9]+)'

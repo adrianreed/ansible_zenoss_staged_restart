@@ -1,11 +1,9 @@
 ---
-- name: Find active volumes
-  set_fact:
-    active_volumes: "{{ mounts_status.stdout | regex_findall(volumes) }}"
-  vars:
-    volumes: '\/opt\/serviced\/var\/volumes\/([a-zA-Z0-9]+)'
+- name: Tasks to get serviced mounts
+  include_tasks: get_active_volumes.yml
 
-- name: Unmount active volumes
+- name: Standard unmount active volumes
+  check_mode: yes
   command:
     cmd: umount -f "{{ item }}"
   with_items: active_volumes

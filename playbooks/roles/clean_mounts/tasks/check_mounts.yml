@@ -2,5 +2,5 @@
 - name: Check for active serviced mounts
   command:
     cmd: grep serviced /proc/mounts
-  register: grep_status
-  failed_when: grep_status.stdout_lines | list | count != 0
+  register: mounts_status
+  failed_when: mounts_status.stdout_lines | list | count != 0

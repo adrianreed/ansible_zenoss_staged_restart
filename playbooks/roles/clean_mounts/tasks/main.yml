@@ -1,15 +1,15 @@
 ---
-- name: Tasks to clean mounts
+- name: Clean mounts
   block:
-    - name: Check for active serviced mounts
+    - name: Tasks to check for mounts
       include_tasks: check_mounts.yml
   rescue:
-    - name: Fix active mounts
+    - name: Remove serviced volume mounts
       block:
-        - name: Find active volumes
+        - name: Tasks to standard remove
           include_tasks: remove_mounts.yml
-        - name: Check for active serviced mounts
+        - name: Tasks to check for mounts
           include_tasks: check_mounts.yml
       rescue:
-        - name: Do a lazy unmount of the volumes
+        - name: Tasks to lazy remove
           include_tasks: lazy_remove_mounts.yml

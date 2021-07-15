@@ -1,7 +1,7 @@
 ---
-- name: Stop all serviced Zenoss RM services
-  command:
-    cmd: serviced service stop
+- name: Stop serviced Zenoss RM services
+  shell:
+    cmd: serviced service stop Zenoss.resmgr
 
 - name: Ensure serviced services are stopped
   command:
