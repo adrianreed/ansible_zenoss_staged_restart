@@ -1,0 +1,3 @@
+---
+- name: Clean environment
+  import_playbook: playbooks/d_clean_workers.yml

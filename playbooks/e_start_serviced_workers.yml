@@ -1,0 +1,7 @@
+---
+- hosts: zenoss_pool
+  tasks:
+  - name: Start serviced in the worker nodes
+    service:
+      name: serviced
+      state: started

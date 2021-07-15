@@ -1,0 +1,5 @@
+---
+- name: Start environment
+  import_playbook: playbooks/e_start_serviced_workers.yml
+  import_playbook: playbooks/f_start_serviced_master.yml
+  import_playbook: playbooks/g_start_rm_services.yml

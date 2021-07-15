@@ -1,0 +1,14 @@
+---
+- hosts: zenoss_master
+  tasks:
+  - name: Stop all serviced Zenoss RM services
+    command:
+      cmd: serviced service stop
+ 
+  - name: Check serviced services are stopped
+    command:
+      cmd: serviced service status
+    register: serviced_status
+    until: serviced_status.stdout_lines | reject('search','stopped') | list | count == 1
+    retries: 5
+    delay: 30

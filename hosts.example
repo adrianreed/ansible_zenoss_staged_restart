@@ -1,0 +1,22 @@
+all:
+  hosts:
+  children:
+    zenoss_master:
+      hosts:
+        zenoss_master:
+    zen_collector:
+      hosts:
+        zenoss_collector1:
+        zenoss_collector2:
+        zenoss_collector3:
+        zenoss_collector4:
+    zen_rm:
+      hosts:
+        zenoss_rm1:
+        zenoss_rm2:
+        zenoss_rm3:
+        zenoss_rm4:
+    zenoss_pool:
+      children:
+        zen_collector:
+        zen_rm:

@@ -1,0 +1,8 @@
+---
+- name: Zenoss maintenance staged restart
+  become: yes
+  become_method: sudo
+  become_user: "{{ zenoss_user }}"
+  import_playbook: env_stop.yml
+  import_playbook: env_clean.yml
+  import_playbook: env_start.yml
