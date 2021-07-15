@@ -11,4 +11,3 @@
   retries: 1
   delay: 30
   failed_when: docker_status.stdout_lines | list | count != 0
-~                                                              
