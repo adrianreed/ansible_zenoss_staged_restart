@@ -1,3 +1,4 @@
-# Zenoss user with permissions to manage serviced through systemctl and the serviced command
+# System user with SSH access to the Zenoss hosts (that ansible will use to connect)
 ssh_user:
+# Zenoss user with permissions to manage serviced through systemctl and the serviced command
 zenoss_user:
