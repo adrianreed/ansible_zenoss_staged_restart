@@ -5,7 +5,7 @@
   become: yes
   become_user: "{{ zenoss_user }}"
   roles:
-    - shutdown_rm
+    - stop_rm
     - stop_serviced
   tags: stop
 
