@@ -1,5 +1,6 @@
 # (Work on progress)
-# This playbook runs a maintenance staged restart on a multi host Zenoss deployment
+# Zenoss Maintenance Staged Restart
+Runs a maintenance staged restart on a multi host Zenoss deployment
 
 ## Description
 This playbook can be used to perform a maintenance staged restart of a multi host Zenoss deployment as described in the following official article:
