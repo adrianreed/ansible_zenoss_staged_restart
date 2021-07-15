@@ -1,2 +1,3 @@
 # Zenoss user with permissions to manage serviced through systemctl and the serviced command
-zenoss_user: 
+ssh_user:
+zenoss_user:

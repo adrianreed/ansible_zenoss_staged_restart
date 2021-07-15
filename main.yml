@@ -1,5 +1,6 @@
 ---
 - name: Zenoss maintenance staged restart
+  remote_user: "{{ ssh_user }}"
   become: yes
   become_method: sudo
   become_user: "{{ zenoss_user }}"
