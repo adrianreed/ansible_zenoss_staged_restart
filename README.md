@@ -1,4 +1,3 @@
-# (Work in progress)
 # Zenoss Maintenance Staged Restart
 Run a maintenance staged restart on a multi host Zenoss deployment
 
