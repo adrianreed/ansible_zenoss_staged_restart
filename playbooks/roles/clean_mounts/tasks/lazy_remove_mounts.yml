@@ -3,13 +3,11 @@
   include_tasks: get_active_volumes.yml
 
 - name: Lazy unmount active volumes
-  check_mode: yes
   command:
     cmd: umount -f -l "{{ item }}"
   with_items: active_volumes
 
 - name: Restart NFS service
-  check_mode: yes
   service:
     name: nfs
     state: restarted

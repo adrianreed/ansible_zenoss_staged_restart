@@ -3,7 +3,6 @@
   include_tasks: get_active_volumes.yml
 
 - name: Standard unmount active volumes
-  check_mode: yes
   command:
     cmd: umount -f "{{ item }}"
   with_items: active_volumes
